@@ -69,9 +69,4 @@ Flowmate is a modern, AI-powered workspace that helps professionals automate rep
 ---
 
 
-## License
-
-This project is open source under the [MIT License](LICENSE).
-
----
 
