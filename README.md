@@ -34,38 +34,10 @@ Flowmate is a modern, AI-powered workspace that helps professionals automate rep
 
 ---
 
-## Architecture
+## Usage Guide
 
-```
-┌─────────────────────────────────────────────────────┐
-│                     Frontend                         │
-│  ┌─────────┐ ┌──────────┐ ┌────────┐ ┌──────────┐  │
-│  │  Email  │ │ Meeting  │ │ Planner│ │ Research │  │
-│  │Generator│ │Summarizer│ │        │ │Assistant │  │
-│  └────┬────┘ └────┬─────┘ └───┬────┘ └────┬─────┘  │
-│       └─────────────┴─────────┴───────────┘         │
-│                    aiStream.ts                       │
-│                       │                              │
-│              POST /functions/v1/ai-assistant         │
-└───────────────────────┬─────────────────────────────┘
-                        │ SSE stream
-┌───────────────────────┴─────────────────────────────┐
-│              Supabase Edge Function                  │
-│           (supabase/functions/ai-assistant)          │
-│              Routes to Lovable AI Gateway            │
-└─────────────────────────────────────────────────────┘
-```
-
-### Key Design Decisions
-
-- **Edge Function Router** — A single Supabase Edge Function (`ai-assistant`) handles all AI requests. It injects feature-specific system prompts and proxies to the AI gateway with streaming enabled.
-- **Streaming Layer** — `src/lib/aiStream.ts` handles the raw SSE stream, parses delta chunks, and calls per-chunk callbacks so the UI updates in real time.
-- **Feature Prompts** — Each tool uses a tailored system prompt (email, summary, planner, research, chat) to guide the model toward consistent, high-quality output formats.
 
 ---
-
-
-## Usage Guide
 
 ### 1. Email Generator
 1. Describe what the email is about
